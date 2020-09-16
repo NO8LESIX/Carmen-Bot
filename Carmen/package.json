@@ -1,0 +1,20 @@
+{
+  "name": "carmen-bot",
+  "version": "1.0.0",
+  "description": "Music and Movie bot for discord",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index,js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Carmen B Cerna",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
