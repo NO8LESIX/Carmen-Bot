@@ -14,6 +14,7 @@ module.exports = (client, message) => {
     message.content.includes("<@!753100404534935622>") ||
     message.content.includes("<@&755871336139718768>")
   ) {
+    //console.log(message.content);
     msg = message;
     msg.content = msg.content.split(" ").slice(1).join(" ");
     //Gotta be a better way to do this.
