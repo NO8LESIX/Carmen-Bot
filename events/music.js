@@ -1,28 +1,46 @@
+const Discord = require("discord.js");
 const prefix = process.env.prefix;
 const ytdl = require("ytdl-core");
+
+const client = new Discord.Client();
+
 const queue = new Map();
 
-module.exports = async(message) => {
-  //console.log(prefix + message);
+client.once("ready", () => {
+  console.log("Ready!");
+});
+
+client.once("reconnecting", () => {
+  console.log("Reconnecting!");
+});
+
+client.once("disconnect", () => {
+  console.log("Disconnect!");
+});
+
+client.on("message", async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
   const serverQueue = queue.get(message.guild.id);
 
   if (message.content.startsWith(`${prefix}play`)) {
-    return execute(message, serverQueue);
+    execute(message, serverQueue);
+    return;
   } else if (message.content.startsWith(`${prefix}skip`)) {
-    return skip(message, serverQueue);
+    skip(message, serverQueue);
+    return;
   } else if (message.content.startsWith(`${prefix}stop`)) {
-    return stop(message, serverQueue);
+    stop(message, serverQueue);
+    return;
   } else {
-    return message.channel.send("You need to enter a valid command!");
+    message.channel.send("You need to enter a valid command!");
   }
-};
+});
 
 async function execute(message, serverQueue) {
   const args = message.content.split(" ");
-  console.log("message"+ $(message.content));
+
   const voiceChannel = message.member.voice.channel;
   if (!voiceChannel)
     return message.channel.send(
@@ -38,7 +56,7 @@ async function execute(message, serverQueue) {
   const songInfo = await ytdl.getInfo(args[1]);
   const song = {
     title: songInfo.title,
-    url: songInfo.video_url,
+    url: songInfo.video_url
   };
 
   if (!serverQueue) {
@@ -48,7 +66,7 @@ async function execute(message, serverQueue) {
       connection: null,
       songs: [],
       volume: 5,
-      playing: true,
+      playing: true
     };
 
     queue.set(message.guild.id, queueContruct);
@@ -103,7 +121,7 @@ function play(guild, song) {
       serverQueue.songs.shift();
       play(guild, serverQueue.songs[0]);
     })
-    .on("error", (error) => console.error(error));
+    .on("error", error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
