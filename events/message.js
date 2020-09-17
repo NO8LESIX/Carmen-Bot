@@ -1,5 +1,6 @@
 const kick = require("../commands/kick");
 const help = require("../commands/help");
+const music = require("../commands/music")
 module.exports = (client, message) => {
   //did Carmen write the message?
   if (message.author.bot) return;
@@ -9,16 +10,22 @@ module.exports = (client, message) => {
     message.content.includes("<@&755871336139718768>")
   ) {
     msg = message.content.split(" ").slice(1).join(" ");
-    //console.log(msg);
+    console.log(msg);
     //Gotta be a better way to do this.
     //We are working blind with types here
     switch (msg.toLowerCase()) {
       case "":
-        return;
-      case "!kick":
+        return message.reply("Did you need something hun?");
+      case "kick":
         return kick(message);
-      case "!help":
+      case "help":
         return help(message);
+      case msg.includes("play"):
+        return music(message);
+      case msg.includes("stop"):
+        return music(message);
+      case msg.includes("skip"):
+        return music(message);
       case "ping":
         return message.reply("Pong!");
       case "hello":

@@ -3,8 +3,16 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const client = new Discord.Client();
 
-client.on('ready', () => {
-  console.log('I am ready!');
+client.once("ready", () => {
+  console.log("Ready!");
+});
+
+client.once("reconnecting", () => {
+  console.log("Reconnecting!");
+});
+
+client.once("disconnect", () => {
+  console.log("Disconnect!");
 });
 
 fs.readdir("./events/", (err, files) => {
