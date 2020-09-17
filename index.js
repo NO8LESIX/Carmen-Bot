@@ -6,6 +6,7 @@ const client = new Discord.Client();
 client.on('ready', () => {
   console.log('Carmen is ready!');
 });
+process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
 client.once("reconnecting", () => {
   console.log("Carmen is finding her way back!");
