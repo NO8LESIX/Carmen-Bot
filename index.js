@@ -4,7 +4,15 @@ const fs = require("fs");
 const client = new Discord.Client();
 
 client.on('ready', () => {
-  console.log('I am ready!');
+  console.log('Carmen is ready!');
+});
+
+client.once("reconnecting", () => {
+  console.log("Carmen is finding her way back!");
+});
+
+client.once("disconnect", () => {
+  console.log("Carmen has Disconnected!");
 });
 
 fs.readdir("./events/", (err, files) => {

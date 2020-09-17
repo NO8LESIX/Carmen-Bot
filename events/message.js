@@ -1,23 +1,21 @@
 require("dotenv").config();
+const prefix = process.env.prefix;
 const kick = require("../commands/kick");
 const help = require("../commands/help");
+const music = require("../commands/music");
 module.exports = (client, message) => {
-  console.log("in messages");
-  console.log("message.author");
-  console.log(prefix);
-
-  if (message.author.bot){
+  if (message.author.id == 753100404534935622){
     return;
   }
-  else if (message.content.startsWith(prefix)) {
+  if (message.content.startsWith(prefix)) {
       return music(message);
   }
   else if (
     message.content.includes("<@!753100404534935622>") ||
     message.content.includes("<@&755871336139718768>")
   ) {
-    msg = message.content.split(" ").slice(1).join(" ");
-    //console.log(msg);
+    msg = message;
+    msg.content = msg.content.split(" ").slice(1).join(" ");
     //Gotta be a better way to do this.
     //We are working blind with types here
     switch (msg.toLowerCase()) {
@@ -41,7 +39,7 @@ module.exports = (client, message) => {
     }
   } //end of check
   else {
-      console.log("else");
+      console.log("else" + prefix);
       return;
   }
 }; //end of module

@@ -1,25 +1,11 @@
-const Discord = require("discord.js");
+require("dotenv").config();
 const prefix = process.env.prefix;
 const ytdl = require("ytdl-core");
 
-const client = new Discord.Client();
-
 const queue = new Map();
 
-client.once("ready", () => {
-  console.log("Ready!");
-});
-
-client.once("reconnecting", () => {
-  console.log("Reconnecting!");
-});
-
-client.once("disconnect", () => {
-  console.log("Disconnect!");
-});
-
-client.on("message", async message => {
-  if (message.author.bot) return;
+module.exports = (message) => {
+  console.log(message.content)
   if (!message.content.startsWith(prefix)) return;
 
   const serverQueue = queue.get(message.guild.id);
@@ -36,7 +22,7 @@ client.on("message", async message => {
   } else {
     message.channel.send("You need to enter a valid command!");
   }
-});
+};
 
 async function execute(message, serverQueue) {
   const args = message.content.split(" ");
@@ -52,7 +38,11 @@ async function execute(message, serverQueue) {
       "I need the permissions to join and speak in your voice channel!"
     );
   }
-
+  if(args.length <= 1){
+    return message.channel.send(
+      "You need to provide a youtube url"
+    );
+  }
   const songInfo = await ytdl.getInfo(args[1]);
   const song = {
     title: songInfo.title,
@@ -103,8 +93,14 @@ function stop(message, serverQueue) {
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
+  if(serverQueue == undefined){
+    return message.channel.send(
+      "There are no songs in the queue!"
+    );
+  }
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
+  return;
 }
 
 function play(guild, song) {
