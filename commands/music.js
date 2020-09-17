@@ -1,4 +1,5 @@
 require("dotenv").config();
+const ffmpeg = require("ffmpeg-static")
 const prefix = process.env.prefix;
 const ytdl = require("ytdl-core");
 
