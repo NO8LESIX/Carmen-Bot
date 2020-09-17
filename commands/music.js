@@ -9,11 +9,11 @@ module.exports = async(message) => {
 
   const serverQueue = queue.get(message.guild.id);
 
-  if (message.content.startsWith(`play`)) {
+  if (message.content.startsWith(`${prefix}play`)) {
     return execute(message, serverQueue);
-  } else if (message.content.startsWith(`skip`)) {
+  } else if (message.content.startsWith(`${prefix}skip`)) {
     return skip(message, serverQueue);
-  } else if (message.content.startsWith(`stop`)) {
+  } else if (message.content.startsWith(`${prefix}stop`)) {
     return stop(message, serverQueue);
   } else {
     return message.channel.send("You need to enter a valid command!");

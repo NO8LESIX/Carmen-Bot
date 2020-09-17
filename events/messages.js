@@ -1,17 +1,27 @@
+require("dotenv").config();
 const kick = require("../commands/kick");
 const help = require("../commands/help");
 const music = require("../commands/music")
+const prefix = process.env.prefix;
+
 module.exports = (client, message) => {
-  //did Carmen write the message?
-  if (message.author.bot) return;
-  //was Carmen mentioned?
-  if (
+  console.log("in messages");
+  console.log("message.author");
+  console.log(prefix);
+
+  if (message.author.bot){
+    return;
+  }
+  else if (message.content.startsWith(prefix)) {
+      return music(message);
+  }
+  else if (
     message.content.includes("<@!753100404534935622>") ||
     message.content.includes("<@&755871336139718768>")
   ) {
     msg = message.content.split(" ").slice(1).join(" ");
     console.log(msg);
-    //Gotta be a better way to do this.
+    //TODO: Gotta be a better way to do this.
     //We are working blind with types here
     switch (msg.toLowerCase()) {
       case "":
@@ -40,6 +50,7 @@ module.exports = (client, message) => {
     }
   } //end of check
   else {
-    return;
+      console.log("else");
+      return;
   }
 }; //end of module
