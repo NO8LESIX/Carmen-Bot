@@ -45,8 +45,8 @@ async function execute(message, serverQueue) {
   }
   const songInfo = await ytdl.getInfo(args[1]);
   const song = {
-    title: songInfo.title,
-    url: songInfo.video_url
+    title: songInfo.videoDetails.title,
+    url: songInfo.videoDetails.video_url
   };
 
   if (!serverQueue) {
@@ -83,9 +83,10 @@ function skip(message, serverQueue) {
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
-  if (!serverQueue)
-    return message.channel.send("There is no song that I could skip!");
+  if (!serverQueue || !serverQueue.connection.dispatcher.length)
+    return message.channel.send("There are no songs in queue to skip");
   serverQueue.connection.dispatcher.end();
+  return;
 }
 
 function stop(message, serverQueue) {
@@ -93,7 +94,7 @@ function stop(message, serverQueue) {
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
-  if(serverQueue == undefined){
+  if(!serverQueue){
     return message.channel.send(
       "There are no songs in the queue!"
     );
@@ -119,5 +120,5 @@ function play(guild, song) {
     })
     .on("error", error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+  serverQueue.textChannel.send(`Now playing: **${song.title}**`);
 }

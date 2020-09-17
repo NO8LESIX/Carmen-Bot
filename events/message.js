@@ -18,21 +18,21 @@ module.exports = (client, message) => {
     msg.content = msg.content.split(" ").slice(1).join(" ");
     //Gotta be a better way to do this.
     //We are working blind with types here
-    switch (msg.toLowerCase()) {
+    switch (msg.content.toLowerCase()) {
       case "":
-        return;
-      case "!kick":
-        return kick(message);
-      case "!help":
-        return help(message);
+        return msg.reply("What'cha need hun?");
+      case "kick":
+        return kick(msg);
+      case "help":
+        return help(msg);
       case "ping":
-        return message.reply("Pong!");
+        return msg.reply("Pong!");
       case "hello":
-        return message.reply("Hiya!");
+        return msg.reply("Hiya!");
       case "are you up?":
-        return message.reply("Yup!");
+        return msg.reply("Yup!");
       case "what are you?":
-        return message.reply("My name is Carmen and I am a Bot! :yum: ");
+        return msg.reply("My name is Carmen and I am a Bot! :yum: ");
       default:
         console.log("command not implemented");
         return;
