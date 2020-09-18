@@ -102,6 +102,8 @@ function stop(message, serverQueue) {
   }
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
+  serverQueue.voiceChannel.leave();
+  queue.delete(guild.id);
   return;
 }
 
