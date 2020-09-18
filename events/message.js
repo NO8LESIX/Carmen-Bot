@@ -8,6 +8,7 @@ module.exports = (client, message) => {
     return;
   }
   if (message.content.startsWith(prefix)) {
+      message.reply("Music Command Accepted")
       return music(message);
   }
   else if (
