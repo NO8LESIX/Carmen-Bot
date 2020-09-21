@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Carmen-Bot/static/css/main.5f361e03.chunk.css",
+    "main.js": "/Carmen-Bot/static/js/main.b315cce2.chunk.js",
+    "main.js.map": "/Carmen-Bot/static/js/main.b315cce2.chunk.js.map",
+    "runtime-main.js": "/Carmen-Bot/static/js/runtime-main.fe6840d3.js",
+    "runtime-main.js.map": "/Carmen-Bot/static/js/runtime-main.fe6840d3.js.map",
+    "static/js/2.f38f5518.chunk.js": "/Carmen-Bot/static/js/2.f38f5518.chunk.js",
+    "static/js/2.f38f5518.chunk.js.map": "/Carmen-Bot/static/js/2.f38f5518.chunk.js.map",
+    "index.html": "/Carmen-Bot/index.html",
+    "precache-manifest.5f113e2e121f8de7e1a486f387cffb74.js": "/Carmen-Bot/precache-manifest.5f113e2e121f8de7e1a486f387cffb74.js",
+    "service-worker.js": "/Carmen-Bot/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/Carmen-Bot/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.f38f5518.chunk.js.LICENSE.txt": "/Carmen-Bot/static/js/2.f38f5518.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/Carmen-Bot/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fe6840d3.js",
+    "static/js/2.f38f5518.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.b315cce2.chunk.js"
+  ]
+}
