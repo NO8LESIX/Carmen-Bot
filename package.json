@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Music and Movie bot for discord",
   "main": "index.js",
+  "homepage": "https://no8lesix.github.io/Carmen-Bot/",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
