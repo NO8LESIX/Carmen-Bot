@@ -82,7 +82,7 @@ async function execute(message, serverQueue) {
 function skip(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "You have to be in a voice channel to stop the music!"
+      "You have to be in a voice channel to skip a song!"
     );
   if (!serverQueue || !serverQueue.connection.dispatcher.length)
     return message.channel.send("There are no songs in queue to skip");
@@ -105,6 +105,39 @@ function stop(message, serverQueue) {
   return;
 }
 
+function pause(message, serverQueue) {
+  if (!message.member.voice.channel)
+    return message.channel.send(
+      "You have to be in a voice channel to stop the music!"
+    );
+  if(!serverQueue){
+    return message.channel.send(
+      "There are no songs in the queue!"
+    );
+  }
+  serverQueue.songs = [];
+  serverQueue.voiceChannel.leave();
+  return;
+}
+function resume(message, serverQueue) {
+  if (!message.member.voice.channel)
+    return message.channel.send(
+      "You have to be in a voice channel to resume the music!"
+    );
+  if(!serverQueue){
+    return message.channel.send(
+      "There are no songs being played!"
+    );
+  }
+  if(serverQueue.songs[0].playing === true){
+    return message.channel.send(
+      "The song is already playing!"
+    );
+  }
+
+  return;
+}
+
 function play(guild, song) {
   const serverQueue = queue.get(guild.id);
   if (!song) {
@@ -122,7 +155,7 @@ function play(guild, song) {
       serverQueue.songs.shift();
       play(guild, serverQueue.songs[0]);
     })
-    .on("error", (error) => console.error(error));
+    .on("error", (error) => {console.error(error); serverQueue.textChannel.send(`Stream Error`);});
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Now playing: **${song.title}**`);
 }
