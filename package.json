@@ -13,13 +13,13 @@
   "author": "Carmen",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
-    "discord.js": "^12.3.1",
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^12.4.1",
     "dotenv": "^7.0.0",
     "ffmpeg-static": "^4.2.7",
-    "ytdl-core": "^3.2.2"
+    "ytdl-core": "^4.0.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.6"
   }
 }

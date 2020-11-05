@@ -6,6 +6,7 @@ const music = require("../commands/music");
 const dnd = require("../commands/dnd");
 const dndgen = require("../commands/dndgen");
 const dndFunctions = require("../functions/dndFunctions.ts");
+const _new = require("../commands/new");
 
 module.exports = (client, message) => {
   if (message.author.id == 753100404534935622) {
@@ -46,6 +47,9 @@ module.exports = (client, message) => {
         return msg.reply("Pong!");
       case "hello":
         return msg.reply("Hiya!");
+        case "new":
+          console.log("new")
+          return _new(msg)
       case "say":
         return msg.channel.send(`${msg.content.split(" ").slice(1).join(" ")}`);
       case "are you up?":
