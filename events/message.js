@@ -62,3 +62,6 @@ module.exports = (client, message) => {
     }
   } //end of check
 }; //end of module
+
+// npm rm ytdl-core-discord
+// npm i ytdl-core@latest
