@@ -119,8 +119,7 @@ function stop(message, serverQueue) {
       "There are no songs in the queue!"
     );
   }
-  queue = new Map();
-  serverQueue = ;
+  serverQueue = new Map();
   serverQueue.voiceChannel.leave();
   return;
 }
