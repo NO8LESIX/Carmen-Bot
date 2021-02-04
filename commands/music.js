@@ -63,7 +63,7 @@ async function execute(message, serverQueue) {
       voiceChannel: voiceChannel,
       connection: null,
       songs: [],
-      volume: 1,
+      volume: 2,
       playing: true
     };
 
@@ -82,7 +82,7 @@ async function execute(message, serverQueue) {
     }
   } else {
     serverQueue.songs.push(song);
-    return message.channel.send(`${song.title} has been added to the queue!`);
+    return message.channel.send(`**${song.title}** has been added to the queue!`);
   }
 }
 
@@ -93,7 +93,7 @@ function skip(message, serverQueue) {
     );
   if (!serverQueue || !serverQueue.connection.dispatcher.length)
     return message.channel.send("There are no songs in queue to skip");
-  serverQueue.connection.dispatcher.end();
+  queue.delete(message.guild.id);
   return;
 }
 
@@ -164,7 +164,7 @@ function play(guild, song) {
   const dispatcher = serverQueue.connection
     .play(ytdl(song.url), {
       quality: "highestaudio",
-      highWaterMark: 1 << 25,
+      highWaterMark: 64,
       filter: format => format.container === 'mp4'
     })
     .on("finish", () => {
