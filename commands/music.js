@@ -128,7 +128,7 @@ function showQueue(message, serverQueue) {
   if (serverQueue.songs.length <= 0) {
     return message.channel.send(`The queue is empty!`);
   }
-
+  
   let songList = ``;
   let songCounter = 1;
   serverQueue.songs.forEach((element) => {
