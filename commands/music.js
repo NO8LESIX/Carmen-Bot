@@ -9,20 +9,39 @@ module.exports = (message) => {
   console.log(message.content)
   if (!message.content.startsWith(prefix)) return;
 
-  const serverQueue = queue.get(message.guild.id);
+  let serverQueue = queue.get(message.guild.id);
+  key = msg.content.split(" ")
 
-  if (message.content.startsWith(`${prefix}play`)) {
-    execute(message, serverQueue);
+  switch(key[0]){
+    case `${prefix}play`:
+      execute(message, serverQueue);
+      return;
+    case `${prefix}skip`:
+      skip(message, serverQueue);
+      return;
+    case `${prefix}stop`:
+      stop(message, serverQueue);
+      return;
+    case `${prefix}queue`:
+      showQueue(message, serverQueue);
     return;
-  } else if (message.content.startsWith(`${prefix}skip`)) {
-    skip(message, serverQueue);
-    return;
-  } else if (message.content.startsWith(`${prefix}stop`)) {
-    stop(message, serverQueue);
-    return;
-  } else {
-    message.channel.send("You need to enter a valid command!");
+    default:
+      message.channel.send("You need to enter a valid command!");
+      return;
   }
+
+  // if (message.content.startsWith(`${prefix}play`)) {
+  //   execute(message, serverQueue);
+  //   return;
+  // } else if (message.content.startsWith(`${prefix}skip`)) {
+  //   skip(message, serverQueue);
+  //   return;
+  // } else if (message.content.startsWith(`${prefix}stop`)) {
+  //   stop(message, serverQueue);
+  //   return;
+  // } else {
+  //   message.channel.send("You need to enter a valid command!");
+  // }
 };
 
 async function execute(message, serverQueue) {
@@ -50,7 +69,7 @@ async function execute(message, serverQueue) {
     url: songInfo.videoDetails.video_url
   };
 
-  if (!serverQueue) {
+  if (serverQueue.length < 0) {
     const queueContruct = {
       textChannel: message.channel,
       voiceChannel: voiceChannel,
@@ -71,7 +90,7 @@ async function execute(message, serverQueue) {
     } catch (err) {
       console.log(err);
       queue.delete(message.guild.id);
-      return message.channel.send(err);
+      return message.channel.send(`Uh, oh! We encountered the following issue playing the song: ${err}`);
     }
   } else {
     serverQueue.songs.push(song);
@@ -100,11 +119,19 @@ function stop(message, serverQueue) {
       "There are no songs in the queue!"
     );
   }
-  serverQueue.songs = [];
+  queue = new Map();
+  serverQueue = ;
   serverQueue.voiceChannel.leave();
   return;
 }
+function showQueue(message, serverQueue){
+  songList = ""
+  for(i = 0; i < serverQueue.songs.length; i++){
+    songlist = songlist + `\n${i+1}. ${serverQueue.songs[i].title}`
+  }
 
+  return message.channel.send(`Here is the current queue: ${songList}`)
+}
 function pause(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
@@ -150,6 +177,7 @@ function play(guild, song) {
     .play(ytdl(song.url), {
       quality: "highestaudio",
       highWaterMark: 1 << 25,
+      filter: format => format.container === 'mp4'
     })
     .on("finish", () => {
       serverQueue.songs.shift();

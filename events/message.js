@@ -47,7 +47,7 @@ module.exports = (client, message) => {
         return msg.reply("Pong!");
       case "hello":
         return msg.reply("Hiya!");
-        case "new":
+      case "new":
           console.log("new")
           return _new(msg)
       case "say":
