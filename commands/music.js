@@ -61,7 +61,7 @@ async function execute(message, serverQueue) {
       connection: null,
       songs: [],
       volume: 2,
-      playing: true,
+      playing: true
     };
 
     queue.set(message.guild.id, queueContruct);
@@ -162,7 +162,7 @@ function play(guild, song) {
     .play(ytdl(song.url), {
       quality: "highestaudio",
       highWaterMark: 64,
-      filter: (format) => format.container === "mp4",
+      filter: format => format.container === 'mp4'
     })
     .on("finish", () => {
       serverQueue.songs.shift();
