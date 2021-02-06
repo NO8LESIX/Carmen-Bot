@@ -31,6 +31,9 @@ module.exports = (message) => {
     case `${prefix}queue`:
       showQueue(message, serverQueue);
       return;
+    case `${prefix}volume`:
+      volume(message, serverQueue);
+      return;
     default:
       message.channel.send("You need to enter a valid command!");
       return;
@@ -66,7 +69,7 @@ async function execute(message, serverQueue) {
       voiceChannel: voiceChannel,
       connection: null,
       songs: [],
-      volume: 2,
+      volume: 50,
       playing: true,
     };
 
@@ -103,9 +106,6 @@ function skip(message, serverQueue) {
 
   serverQueue.songs.shift();
   play(message.guild, serverQueue.songs[0]);
-  serverQueue.textChannel.send(
-    `Now playing: **${serverQueue.songs[0].title}**`
-  );
 
   return;
 }
@@ -128,7 +128,7 @@ function showQueue(message, serverQueue) {
   if (serverQueue.songs.length <= 0) {
     return message.channel.send(`The queue is empty!`);
   }
-  
+
   let songList = ``;
   let songCounter = 1;
   serverQueue.songs.forEach((element) => {
@@ -154,7 +154,7 @@ function pause(message, serverQueue) {
     );
   } else {
     return message.channel.send(
-      "Are you smooth? The stream is already paused!"
+      "Are you missing a few wrinkles? The stream is already paused!"
     );
   }
 }
@@ -177,8 +177,22 @@ function resume(message, serverQueue) {
   }
 }
 
+function volume(message, serverQueue) {
+  if (!message.member.voice.channel)
+    return message.channel.send(
+      "You have to be in the voice channel to adjust the volume!"
+    );
+  if (!serverQueue) {
+    return message.channel.send("There isn't any music playing!");
+  }
+  const args = message.content.split(" ");
+  serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 100);
+  return message.channel.send(`Volume adjusted to ${args[1]}%`);
+}
+
 function play(guild, song) {
   const serverQueue = queue.get(guild.id);
+
   if (!song) {
     serverQueue.voiceChannel.leave();
     queue.delete(guild.id);
@@ -199,6 +213,7 @@ function play(guild, song) {
       console.error(error);
       serverQueue.textChannel.send(`Stream Error: ${error}`);
     });
-  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+  dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
   serverQueue.textChannel.send(`Now playing: **${song.title}**`);
 }
