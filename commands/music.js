@@ -11,7 +11,7 @@ module.exports = (message) => {
 
   let serverQueue = queue.get(message.guild.id);
 
-  //determines the execution method based on !{keyword}
+  //change this to switch to pull from an enumeration `{prefix}{musicKeywords}`
   switch (message.content.split(" ").slice(0)[0]) {
     case `${prefix}play`:
       execute(message, serverQueue);
@@ -69,7 +69,7 @@ async function execute(message, serverQueue) {
       voiceChannel: voiceChannel,
       connection: null,
       songs: [],
-      volume: 50,
+      volume: 5,
       playing: true,
     };
 
@@ -125,8 +125,8 @@ function stop(message, serverQueue) {
 }
 
 function showQueue(message, serverQueue) {
-  if (serverQueue.songs.length <= 0) {
-    return message.channel.send(`The queue is empty!`);
+  if (!serverQueue) {
+    return message.channel.send(`There are no songs in queue!`);
   }
 
   let songList = ``;
@@ -186,6 +186,7 @@ function volume(message, serverQueue) {
     return message.channel.send("There isn't any music playing!");
   }
   const args = message.content.split(" ");
+  serverQueue.volume = args[1];
   serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 100);
   return message.channel.send(`Volume adjusted to ${args[1]}%`);
 }
