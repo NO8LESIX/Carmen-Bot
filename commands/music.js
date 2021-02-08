@@ -34,6 +34,9 @@ module.exports = (message) => {
     case `${prefix}volume`:
       volume(message, serverQueue);
       return;
+    case `${prefix}playlist`:
+      message.channel.send(`Please specify: **{"add, remove or showSongs"}**`);
+      return;
     default:
       message.channel.send("You need to enter a valid command!");
       return;
